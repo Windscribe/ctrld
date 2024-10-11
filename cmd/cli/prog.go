@@ -501,9 +501,7 @@ func (p *prog) run(reload bool, reloadCh chan struct{}) {
 			_ = p.logConn.Close()
 		}
 		go p.apiConfigReload()
-		if !isMobile() {
-			p.postRun()
-		}
+		p.postRun()
 	}
 	wg.Wait()
 }

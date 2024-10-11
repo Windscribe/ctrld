@@ -56,8 +56,8 @@ const (
 )
 
 var (
-	version = "1.3.10"
-	commit  = ""
+	version = "dev"
+	commit  = "none"
 )
 
 var (
