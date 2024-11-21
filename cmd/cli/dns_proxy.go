@@ -921,7 +921,7 @@ func (p *prog) performLeakingQuery() {
 	// Signal dns watchers to stop, so changes made below won't be reverted.
 	p.leakingQuery.Store(true)
 	p.resetDNS()
-	ns := ctrld.InitializeOsResolver()
+	ns := ctrld.InitializeOsResolver(p.androidNameServers())
 	mainLog.Load().Debug().Msgf("re-initialized OS resolver with nameservers: %v", ns)
 	p.dnsWg.Wait()
 	p.setDNS()
