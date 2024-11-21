@@ -82,8 +82,12 @@ func availableNameservers() []string {
 //
 // It's the caller's responsibility to ensure the system DNS is in a clean state before
 // calling this function.
-func InitializeOsResolver() []string {
-	return initializeOsResolver(availableNameservers())
+func InitializeOsResolver(androidNameServers []string) []string {
+	if androidNameServers != nil {
+		return initializeOsResolver(androidNameServers)
+	} else {
+		return initializeOsResolver(availableNameservers())
+	}
 }
 func initializeOsResolver(servers []string) []string {
 	var (

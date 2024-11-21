@@ -22,6 +22,7 @@ type AppCallback interface {
 	Hostname() string
 	LanIp() string
 	MacAddress() string
+	AndroidNameServers() []string
 	Exit(error string)
 }
 
@@ -54,6 +55,9 @@ func mapCallback(callback AppCallback) cli.AppCallback {
 		},
 		MacAddress: func() string {
 			return callback.MacAddress()
+		},
+		AndroidNameServers: func() []string {
+			return callback.AndroidNameServers()
 		},
 		Exit: func(err string) {
 			callback.Exit(err)

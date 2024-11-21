@@ -241,10 +241,20 @@ func (p *prog) preRun() {
 	}
 }
 
+// androidNameServers Only way to access system resolvers on android is through SDK.
+// due to proc/net access not permitted.
+func (p *prog) androidNameServers() []string {
+	if isAndroid() {
+		return p.appCallback.AndroidNameServers()
+	} else {
+		return nil
+	}
+}
+
 func (p *prog) postRun() {
 	if !service.Interactive() {
 		p.resetDNS()
-		ns := ctrld.InitializeOsResolver()
+		ns := ctrld.InitializeOsResolver(p.androidNameServers())
 		mainLog.Load().Debug().Msgf("initialized OS resolver with nameservers: %v", ns)
 		p.setDNS()
 		p.csSetDnsDone <- struct{}{}
