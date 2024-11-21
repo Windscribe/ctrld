@@ -2,6 +2,7 @@ package ctrld_library
 
 import (
 	"github.com/Control-D-Inc/ctrld/cmd/cli"
+	"strings"
 )
 
 // Controller holds global state
@@ -22,7 +23,7 @@ type AppCallback interface {
 	Hostname() string
 	LanIp() string
 	MacAddress() string
-	AndroidNameServers() []string
+	AndroidNameServers() string
 	Exit(error string)
 }
 
@@ -57,7 +58,7 @@ func mapCallback(callback AppCallback) cli.AppCallback {
 			return callback.MacAddress()
 		},
 		AndroidNameServers: func() []string {
-			return callback.AndroidNameServers()
+			return strings.Split(callback.AndroidNameServers(), ",")
 		},
 		Exit: func(err string) {
 			callback.Exit(err)
