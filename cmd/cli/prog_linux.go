@@ -15,6 +15,9 @@ import (
 )
 
 func init() {
+	if isAndroid() {
+		return
+	}
 	sys := new(tsd.System)
 	if r, err := dns.NewOSConfigurator(func(format string, args ...any) {}, sys.HealthTracker(), sys.ControlKnobs(), "lo"); err == nil {
 		useSystemdResolved = r.Mode() == "systemd-resolved"
