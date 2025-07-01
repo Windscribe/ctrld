@@ -302,7 +302,7 @@ func (m *resolvedManager) run(ctx context.Context) {
 			// graciously serialize the resync's health outcome with a
 			// concurrent SetDNS call.
 			//lint:ignore SA1019 upstream code still use it.
-			m.health.SetDNSOSHealth(err)
+			//	m.health.SetDNSOSHealth(err)
 			if err != nil {
 				m.logf("failed to configure systemd-resolved: %v", err)
 			}
