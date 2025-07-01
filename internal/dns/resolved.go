@@ -223,7 +223,7 @@ func (m *resolvedManager) run(ctx context.Context) {
 		// Reset backoff and SetNSOSHealth after successful on reconnect.
 		bo.BackOff(ctx, nil)
 		//lint:ignore SA1019 upstream code still use it.
-		m.health.SetDNSOSHealth(nil)
+		//	m.health.SetDNSOSHealth(nil)
 		return nil
 	}
 
