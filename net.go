@@ -4,6 +4,8 @@ import (
 	"context"
 	"sync"
 	"sync/atomic"
+	"tailscale.com/types/logger"
+	"tailscale.com/util/eventbus"
 	"time"
 
 	"tailscale.com/net/netmon"
@@ -25,7 +27,9 @@ func HasIPv6() bool {
 		val := ctrldnet.IPv6Available(ctx)
 		ipv6Available.Store(val)
 		ProxyLogger.Load().Debug().Msgf("ipv6 availability: %v", val)
-		mon, err := netmon.New(func(format string, args ...any) {})
+		bus := eventbus.New()
+		logf := logger.FromContext(ctx)
+		mon, err := netmon.New(bus, logf)
 		if err != nil {
 			ProxyLogger.Load().Debug().Err(err).Msg("failed to monitor IPv6 state")
 			return
